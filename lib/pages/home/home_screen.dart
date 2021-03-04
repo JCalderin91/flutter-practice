@@ -1,8 +1,11 @@
-import 'dart:ui';
-
-import 'package:api_rest_app/models/supizza.dart';
-import 'package:api_rest_app/services/api_manager.dart';
+import 'package:api_rest_app/components/custom_text_field.dart';
+import 'package:api_rest_app/constans.dart';
+import 'package:api_rest_app/pages/product/product_screen.dart';
+import 'package:api_rest_app/size_config.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'componets/title_with_more_btn.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,143 +13,292 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<SupizzaModel> _supizzaModel;
-
   @override
   void initState() {
-    _supizzaModel = ApiManager().gerData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Supizza'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.green,
-          image: DecorationImage(
-              image: AssetImage('assets/images/pizza-patter.jpg'),
-              repeat: ImageRepeat.repeat),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBar(),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hola, Jesus!',
+                      style: TextStyle(
+                        fontSize: 34.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: CustomTextfield(
+                  icon: Icon(Icons.search),
+                  hint: 'Buscar un servicio',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextWithMoreBtn(title: 'Recomendados', press: () {}),
+              RecomendedItems(),
+              TextWithMoreBtn(title: 'Mas vendidos', press: () {}),
+              BestSellers()
+            ],
+          ),
         ),
-        child: FutureBuilder(
-          future: _supizzaModel,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data.pizzas.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var pizza = snapshot.data.pizzas[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Pizza(pizza: pizza),
-                  );
-                },
-              );
-            } else
-              return CircularProgressIndicator();
-          },
+      ),
+      bottomNavigationBar: ButtomNavBar(),
+    );
+  }
+}
+
+class ButtomNavBar extends StatefulWidget {
+  const ButtomNavBar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _ButtomNavBarState createState() => _ButtomNavBarState();
+}
+
+class _ButtomNavBarState extends State<ButtomNavBar> {
+  int _itemSelected = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      height: 60.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, -7),
+            blurRadius: 33.0,
+            color: kPrimaryColor.withOpacity(0.11),
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _itemSelected = 0;
+              });
+            },
+            icon: Icon(
+              Icons.home,
+              color: _itemSelected == 0 ? kPrimaryColor : Colors.black38,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _itemSelected = 1;
+              });
+            },
+            icon: Icon(
+              Icons.notifications,
+              color: _itemSelected == 1 ? kPrimaryColor : Colors.black38,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _itemSelected = 2;
+              });
+            },
+            icon: Icon(
+              Icons.mail,
+              color: _itemSelected == 2 ? kPrimaryColor : Colors.black38,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _itemSelected = 3;
+              });
+            },
+            icon: Icon(
+              Icons.people,
+              color: _itemSelected == 3 ? kPrimaryColor : Colors.black38,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BestSellers extends StatelessWidget {
+  const BestSellers({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: 6,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.8443,
+      ),
+      itemBuilder: (context, index) {
+        return RecomendedItemCard();
+      },
+    );
+  }
+}
+
+class RecomendedItems extends StatelessWidget {
+  const RecomendedItems({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          RecomendedItemCard(),
+          RecomendedItemCard(),
+          RecomendedItemCard(),
+          RecomendedItemCard(),
+          RecomendedItemCard(),
+          RecomendedItemCard(),
+        ],
+      ),
+    );
+  }
+}
+
+class RecomendedItemCard extends StatelessWidget {
+  const RecomendedItemCard({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductPage(),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          left: kDefaultPadding,
+          right: kDefaultPadding,
+          top: kDefaultPadding / 2,
+          bottom: kDefaultPadding,
+        ),
+        width: SizeConfig.screenWidth * 0.4,
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5.0),
+                topRight: Radius.circular(5.0),
+              ),
+              child: Image.asset('assets/images/item.jpg'),
+            ),
+            Container(
+              padding: EdgeInsets.all(kDefaultPadding / 2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5.0),
+                  bottomRight: Radius.circular(5.0),
+                ),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 10),
+                    blurRadius: 20,
+                    color: kPrimaryColor.withOpacity(0.23),
+                  ),
+                ],
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'Sopa\n'.toUpperCase(),
+                        style: TextStyle(
+                          color: kTextColor,
+                        ),
+                      ),
+                      TextSpan(
+                          text: 'Comida',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: kPrimaryColor.withOpacity(0.5),
+                          ))
+                    ]),
+                  ),
+                  Text(
+                    '\$440',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 16.0,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class Pizza extends StatelessWidget {
-  const Pizza({
+class CustomAppBar extends StatelessWidget {
+  const CustomAppBar({
     Key key,
-    @required this.pizza,
   }) : super(key: key);
-
-  final pizza;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: kDefaultPadding,
+        vertical: kDefaultPadding / 2,
       ),
-      color: Colors.grey.shade100.withOpacity(0.1),
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            margin: EdgeInsets.all(10.0),
-            height: 100,
-            child: Row(
-              children: [
-                Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  color: Colors.transparent,
-                  elevation: 0,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Image.network(
-                        pizza.urlImg.small,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        pizza.nombre,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        pizza.descripcion,
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 5.0),
-                      Container(
-                        height: 20.0,
-                        width: 120.0,
-                        child: ListView.builder(
-                          itemCount: 2,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            var ingrediente = pizza.ingredientes[index];
-                            return Container(
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(ingrediente.urlImg.small),
-                                  ),
-                                  Text(ingrediente.nombre)
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CircleAvatar(
+            backgroundColor: kPrimaryColor,
+            backgroundImage: AssetImage('assets/images/user.jpg'),
+          )
+        ],
       ),
     );
   }

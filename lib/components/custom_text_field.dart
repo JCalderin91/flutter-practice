@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../constans.dart';
 
-class CutomTextfield extends StatelessWidget {
+class CustomTextfield extends StatelessWidget {
   final String hint;
   final Icon icon;
-  const CutomTextfield({
+  const CustomTextfield({
     Key key,
     this.hint,
     this.icon,

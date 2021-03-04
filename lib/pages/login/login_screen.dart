@@ -1,6 +1,5 @@
 import 'package:api_rest_app/components/custom_button.dart';
 import 'package:api_rest_app/components/custom_text_field.dart';
-import 'package:api_rest_app/constans.dart';
 import 'package:api_rest_app/pages/home/home_screen.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +72,9 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
               child: Column(
                 children: [
-                  CutomTextfield(
+                  CustomTextfield(
                       hint: 'Correo elétronico', icon: Icon(Icons.people_alt)),
-                  CutomTextfield(hint: 'Contraseña', icon: Icon(Icons.lock)),
+                  CustomTextfield(hint: 'Contraseña', icon: Icon(Icons.lock)),
                   const SizedBox(height: 5),
                   CustomButtom(
                     onPressed: () {
