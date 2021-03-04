@@ -8,33 +8,47 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: Container(
-        color: kPrimaryColor.withOpacity(0.3),
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          // onVerticalDragUpdate: (details) {
-          //   if (details.delta.dy < 0) {
-          //     print('Delizar hacia arriba');
-          //   } else {
-          //     print('Delizar hacia abajo');
-          //   }
-          // },
-          onTap: () {
-            // Navigator.pushAndRemoveUntil
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginPage(),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
+            },
+            child: Container(
+              color: Colors.white,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/food-delivery.png",
+                    width: 90,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Delivery App',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                    ),
+                  )
+                ],
               ),
-            );
-          },
-          child: Center(
-            child: Image.asset(
-              "assets/images/food-delivery.png",
-              width: SizeConfig.screenWidth * 0.50,
             ),
           ),
-        ),
+          Positioned(
+            bottom: 6.0,
+            right: 6.0,
+            child: Center(child: Text('V1.0')),
+          )
+        ],
       ),
     );
   }
