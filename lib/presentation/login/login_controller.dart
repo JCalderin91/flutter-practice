@@ -1,17 +1,18 @@
+import 'package:get/get.dart';
 import 'package:api_rest_app/domain/repository/auth_repository.dart';
 import 'package:api_rest_app/domain/repository/local_storage_repository.dart';
 import 'package:api_rest_app/domain/request/login_request.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  final LocalRepositoryInterface localRepositoryInterface;
+  final AuthRepositoryInterface authRepositoryInterface;
+
   LoginController({
     this.localRepositoryInterface,
     this.authRepositoryInterface,
   });
 
-  final LocalRepositoryInterface localRepositoryInterface;
-  final AuthRepositoryInterface authRepositoryInterface;
   final usernameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
 

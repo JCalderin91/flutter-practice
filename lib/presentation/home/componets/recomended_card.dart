@@ -10,6 +10,8 @@ class RecomendedItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
