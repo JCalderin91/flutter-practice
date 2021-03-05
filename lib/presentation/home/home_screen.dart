@@ -1,6 +1,6 @@
 import 'package:api_rest_app/components/custom_text_field.dart';
 import 'package:api_rest_app/constans.dart';
-import 'package:api_rest_app/pages/product/product_screen.dart';
+import 'package:api_rest_app/presentation/product/product_screen.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

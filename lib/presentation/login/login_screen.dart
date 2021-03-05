@@ -1,6 +1,6 @@
 import 'package:api_rest_app/components/custom_button.dart';
 import 'package:api_rest_app/components/custom_text_field.dart';
-import 'package:api_rest_app/pages/home/home_screen.dart';
+import 'package:api_rest_app/presentation/home/home_screen.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/material.dart';
 

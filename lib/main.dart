@@ -1,6 +1,8 @@
 import 'package:api_rest_app/constans.dart';
-import 'package:api_rest_app/pages/splash_screen.dart';
+import 'package:api_rest_app/presentation/main_binding.dart';
+import 'package:api_rest_app/presentation/routes/delivery_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,7 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Delivery App',
       theme: ThemeData(
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashPage(),
+      initialRoute: DeliveryRoutes.splash,
+      getPages: DeliveryPages.pages,
+      initialBinding: MainBiding(),
     );
   }
 }
