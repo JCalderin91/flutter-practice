@@ -18,6 +18,7 @@ class LocalRepositoryImpl extends LocalRepositoryInterface {
   Future<String> saveToken(String token) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(_pref_token, token);
+    print('token saved: $token');
     return token;
   }
 

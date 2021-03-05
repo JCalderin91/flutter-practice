@@ -9,24 +9,26 @@ final _url = '$urlBase/products';
 
 class ProductsRepositoryImpl extends ProductsRespositoryInterface {
   @override
-  Future<List<ProductModel>> getProducts(String token) async {
+  Future<List> getProducts(String token) async {
     var products;
     try {
-      final http.Response response = await http.post(
+      final http.Response response = await http.get(
         _url,
         headers: <String, String>{
           "Authorization": "Bearer $token",
         },
       );
-      print(response.statusCode);
+      print("getProducts status: ${response.statusCode}");
       if (response.statusCode == 200) {
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
-        products = ProductModel.fromJson(jsonMap);
-      } else {
-        print('no es 200');
+        List products = jsonMap.map((e) => ProductModel.fromJson(e)).toList();
+        print('p: $products');
+        return products;
       }
     } catch (Exception) {
+      print('e');
+      print(Exception);
       return products;
     }
     return products;

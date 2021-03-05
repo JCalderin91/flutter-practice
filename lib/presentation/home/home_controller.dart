@@ -1,4 +1,3 @@
-// import 'package:api_rest_app/domain/models/product_model.dart';
 import 'package:get/get.dart';
 import 'package:api_rest_app/domain/repository/local_storage_repository.dart';
 import 'package:api_rest_app/domain/repository/products_repository.dart';
@@ -14,19 +13,21 @@ class HomeController extends GetxController {
 
   @override
   void onReady() {
-    print('get product');
-    getProducts();
-    super.onInit();
+    print('fetchProducts');
+    fetchProducts();
+    super.onReady();
   }
 
-  // var product_list = List<ProductModel>().obs;
+  RxList productList = [].obs;
 
-  void getProducts() async {
+  void fetchProducts() async {
     var products;
     try {
       final token = await localRepositoryInterface.getToken();
       print(token);
       products = await productsRespositoryInterface.getProducts(token);
+      print("Productos: $products");
+      productList.assignAll(products);
     } catch (Exception) {
       print(Exception);
       print(products);

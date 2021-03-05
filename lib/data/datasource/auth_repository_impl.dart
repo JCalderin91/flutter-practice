@@ -16,10 +16,7 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
     var user;
     var token;
     try {
-      var body = {
-        "email": loginRequest.username,
-        "password": loginRequest.password
-      };
+      var body = {"email": "jesus@mail.com", "password": "123456"};
       final http.Response response = await http.post(
         _loginUrl,
         body: body,
@@ -28,8 +25,10 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
       if (response.statusCode == 200) {
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
+
         user = User.fromJson(jsonMap['user']);
-        token = json.decode(jsonMap['access_token']);
+        token = jsonMap['access_token'];
+        return LoginResponse(token, user);
       } else {
         print(json.decode(response.body).toString);
       }

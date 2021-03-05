@@ -3,6 +3,7 @@ import 'package:api_rest_app/constans.dart';
 import 'package:api_rest_app/presentation/home/componets/best_sellers.dart';
 import 'package:api_rest_app/presentation/home/componets/button_navigation.dart';
 import 'package:api_rest_app/presentation/home/componets/custom_appbar.dart';
+import 'package:api_rest_app/presentation/home/componets/recomended_card.dart';
 import 'package:api_rest_app/presentation/home/componets/recomended_items.dart';
 import 'package:api_rest_app/presentation/home/componets/title_with_more_btn.dart';
 import 'package:api_rest_app/presentation/home/home_controller.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends GetWidget<HomeController> {
-  final splashController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +50,22 @@ class HomePage extends GetWidget<HomeController> {
               ),
               const SizedBox(height: 10),
               TextWithMoreBtn(title: 'Recomendados', press: () {}),
-              RecomendedItems(),
-              TextWithMoreBtn(title: 'Mas vendidos', press: () {}),
-              BestSellers()
+              Obx(() => controller.productList.isNotEmpty
+                  ? Container(
+                      height: 300,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: controller.productList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final product = controller.productList[index];
+                          return RecomendedItemCard(product: product);
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    )),
             ],
           ),
         ),

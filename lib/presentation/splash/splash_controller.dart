@@ -21,7 +21,7 @@ class SplashController extends GetxController {
   void validateSesion() async {
     final token = await localRepositoryInterface.getToken();
     if (token != null) {
-      // TODO: condicion si hay token
+      Get.offNamed(DeliveryRoutes.home);
     } else {
       Get.offNamed(DeliveryRoutes.login);
     }
