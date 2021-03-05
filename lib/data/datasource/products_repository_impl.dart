@@ -18,17 +18,13 @@ class ProductsRepositoryImpl extends ProductsRespositoryInterface {
           "Authorization": "Bearer $token",
         },
       );
-      print("getProducts status: ${response.statusCode}");
       if (response.statusCode == 200) {
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
         List products = jsonMap.map((e) => ProductModel.fromJson(e)).toList();
-        print('p: $products');
         return products;
       }
     } catch (Exception) {
-      print('e');
-      print(Exception);
       return products;
     }
     return products;

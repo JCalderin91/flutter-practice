@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      defaultTransition: Transition.leftToRight,
+      defaultTransition: Transition.topLevel,
       initialRoute: DeliveryRoutes.splash,
       getPages: DeliveryPages.pages,
       initialBinding: MainBinding(),

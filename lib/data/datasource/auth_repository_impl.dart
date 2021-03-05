@@ -16,12 +16,14 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
     var user;
     var token;
     try {
-      var body = {"email": "jesus@mail.com", "password": "123456"};
+      var body = {
+        "email": loginRequest.username,
+        "password": loginRequest.password,
+      };
       final http.Response response = await http.post(
         _loginUrl,
         body: body,
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
@@ -30,7 +32,7 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
         token = jsonMap['access_token'];
         return LoginResponse(token, user);
       } else {
-        print(json.decode(response.body).toString);
+        // TODO:  implementar para mensajes de error
       }
     } catch (Exception) {
       return LoginResponse(token, user);
@@ -39,7 +41,5 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
   }
 
   @override
-  Future<void> logout(String token) {
-    throw UnimplementedError();
-  }
+  Future<void> logout(String token) async {}
 }

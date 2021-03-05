@@ -27,7 +27,6 @@ class LoginController extends GetxController {
       await localRepositoryInterface.saveUser(loginResponse.user);
       return true;
     } catch (Exception) {
-      print(Exception);
       return false;
     }
   }

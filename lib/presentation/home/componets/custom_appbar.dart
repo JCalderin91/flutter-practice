@@ -2,8 +2,10 @@ import 'package:api_rest_app/constans.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final Function press;
   const CustomAppBar({
     Key key,
+    this.press,
   }) : super(key: key);
 
   @override
@@ -16,9 +18,12 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          CircleAvatar(
-            backgroundColor: kPrimaryColor,
-            backgroundImage: AssetImage('assets/images/user.jpg'),
+          GestureDetector(
+            onDoubleTap: press,
+            child: CircleAvatar(
+              backgroundColor: kPrimaryColor,
+              backgroundImage: AssetImage('assets/images/user.jpg'),
+            ),
           )
         ],
       ),

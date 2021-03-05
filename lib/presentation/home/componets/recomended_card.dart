@@ -1,6 +1,5 @@
 import 'package:api_rest_app/constans.dart';
 import 'package:api_rest_app/domain/models/product_model.dart';
-import 'package:api_rest_app/presentation/product/product_screen.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/material.dart';
 
