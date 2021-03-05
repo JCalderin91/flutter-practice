@@ -1,18 +1,30 @@
 import 'package:api_rest_app/components/custom_button.dart';
 import 'package:api_rest_app/components/custom_text_field.dart';
-import 'package:api_rest_app/presentation/home/home_screen.dart';
+import 'package:api_rest_app/presentation/login/login_controller.dart';
+import 'package:api_rest_app/presentation/routes/delivery_navigation.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
+class LoginPage extends GetWidget<LoginController> {
+  void login() async {
+    final result = await controller.login();
+    if (result) {
+      Get.toNamed(DeliveryRoutes.home);
+    } else {
+      Get.snackbar(
+        'Error',
+        'Ha ocurrido un error al intentar ingresar',
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+      );
+    }
+  }
 
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         // controller: controller,
@@ -73,18 +85,18 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   CustomTextfield(
-                      hint: 'Correo elétronico', icon: Icon(Icons.people_alt)),
-                  CustomTextfield(hint: 'Contraseña', icon: Icon(Icons.lock)),
+                    controller: controller.usernameTextController,
+                    hint: 'Correo elétronico',
+                    icon: Icon(Icons.people_alt),
+                  ),
+                  CustomTextfield(
+                    controller: controller.passwordTextController,
+                    hint: 'Contraseña',
+                    icon: Icon(Icons.lock),
+                  ),
                   const SizedBox(height: 5),
                   CustomButtom(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
-                    },
+                    onPressed: login,
                     child: Text(
                       'Iniciar sesión',
                       style: TextStyle(

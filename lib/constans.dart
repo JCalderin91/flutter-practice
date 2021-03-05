@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String urlBase = 'http://api-example.test:8080/api';
+const String urlBase = 'http://192.168.43.30:8000/api';
 
 const kPrimaryColor = Color(0xFFe64d2e); // #e64d2e
 const kSecondaryColor = Color(0xFFDFDFDF);

@@ -22,23 +22,23 @@ class UserModel {
 
 class User {
   User({
-    this.id,
+    // this.id,
     this.name,
     this.email,
   });
 
-  int id;
+  // int id;
   String name;
   String email;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"] as int,
+        // id: json["id"] as int,
         name: json["name"] as String,
         email: json["email"] as String,
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        // "id": id,
         "name": name,
         "email": email,
       };

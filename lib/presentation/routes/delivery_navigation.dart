@@ -1,4 +1,6 @@
+import 'package:api_rest_app/presentation/home/home_binding.dart';
 import 'package:api_rest_app/presentation/home/home_screen.dart';
+import 'package:api_rest_app/presentation/login/login_biding.dart';
 import 'package:api_rest_app/presentation/login/login_screen.dart';
 import 'package:api_rest_app/presentation/splash/splash_binding.dart';
 import 'package:api_rest_app/presentation/splash/splash_screen.dart';
@@ -20,10 +22,12 @@ class DeliveryPages {
     GetPage(
       name: DeliveryRoutes.login,
       page: () => LoginPage(),
+      binding: LoginBiding(),
     ),
     GetPage(
       name: DeliveryRoutes.home,
       page: () => HomePage(),
+      binding: HomeBinding(),
     ),
   ];
 }

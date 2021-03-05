@@ -3,7 +3,7 @@ import 'package:api_rest_app/domain/repository/local_storage_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _pref_token = 'ACCESS_TOKEN';
-const _pref_user_id = 'USER_ID';
+// const _pref_user_id = 'USER_ID';
 const _pref_username = 'USERNAME';
 const _pref_user_email = 'USER_EMAIL';
 
@@ -30,12 +30,12 @@ class LocalRepositoryImpl extends LocalRepositoryInterface {
   @override
   Future<User> getUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final userId = sharedPreferences.getString(_pref_user_id);
+    // final userId = sharedPreferences.getString(_pref_user_id);
     final username = sharedPreferences.getString(_pref_username);
     final userEmail = sharedPreferences.getString(_pref_user_email);
 
     final user = User(
-      id: int.parse(userId),
+      // id: int.parse(userId),
       email: userEmail,
       name: username,
     );
@@ -45,7 +45,7 @@ class LocalRepositoryImpl extends LocalRepositoryInterface {
   @override
   Future<User> saveUser(User user) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(_pref_user_id, user.id.toString());
+    // sharedPreferences.setString(_pref_user_id, user.id.toString());
     sharedPreferences.setString(_pref_username, user.name);
     sharedPreferences.setString(_pref_user_email, user.email);
     return user;

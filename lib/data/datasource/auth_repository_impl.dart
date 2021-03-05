@@ -12,29 +12,35 @@ final _loginUrl = urlBase + _loginEndPoint;
 
 class AuthRepositoryImpl extends AuthRepositoryInterface {
   @override
-  Future<LoginResponse> login(LoginRequst loginRequst) async {
+  Future<LoginResponse> login(LoginRequest loginRequest) async {
     var user;
     var token;
     try {
+      var body = {
+        "email": loginRequest.username,
+        "password": loginRequest.password
+      };
       final http.Response response = await http.post(
         _loginUrl,
-        body: jsonEncode(loginRequst),
+        body: body,
       );
+      print(response.statusCode);
       if (response.statusCode == 200) {
         var jsonString = response.body;
-        var userJsonMap = json.decode(jsonString).user;
-        user = User.fromJson(userJsonMap);
-        token = json.decode(jsonString).token;
+        var jsonMap = json.decode(jsonString);
+        user = User.fromJson(jsonMap['user']);
+        token = json.decode(jsonMap['access_token']);
+      } else {
+        print(json.decode(response.body).toString);
       }
     } catch (Exception) {
       return LoginResponse(token, user);
     }
-    return user;
+    return LoginResponse(token, user);
   }
 
   @override
   Future<void> logout(String token) {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 }
