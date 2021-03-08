@@ -1,11 +1,15 @@
 import 'package:api_rest_app/constans.dart';
 import 'package:api_rest_app/domain/models/product_model.dart';
+import 'package:api_rest_app/presentation/home/home_controller.dart';
+import 'package:api_rest_app/presentation/routes/delivery_navigation.dart';
 import 'package:api_rest_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RecomendedItemCard extends StatelessWidget {
+  final controller = Get.find<HomeController>();
   final ProductModel product;
-  const RecomendedItemCard({
+  RecomendedItemCard({
     Key key,
     this.product,
   }) : super(key: key);
@@ -16,12 +20,8 @@ class RecomendedItemCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ProductPage(),
-        //   ),
-        // );
+        controller.selectProduct(product);
+        Get.toNamed(DeliveryRoutes.product);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -30,7 +30,7 @@ class RecomendedItemCard extends StatelessWidget {
           top: kDefaultPadding / 2,
           bottom: kDefaultPadding,
         ),
-        width: SizeConfig.screenWidth * 0.4,
+        width: SizeConfig.screenWidth * 0.6,
         child: Column(
           children: [
             ClipRRect(
@@ -38,7 +38,25 @@ class RecomendedItemCard extends StatelessWidget {
                 topLeft: Radius.circular(5.0),
                 topRight: Radius.circular(5.0),
               ),
-              child: Image.network(product.image),
+              child: Container(
+                // padding: EdgeInsets.all(24),
+                color: Colors.white,
+                // child: Hero(
+                //   tag: product.id,
+                //   child: Image.asset(
+                //     'assets/images/food-delivery.png',
+                //   ),
+                // ),
+                child: Hero(
+                  tag: product.id,
+                  child: Image.network(
+                    product.image,
+                  ),
+                ),
+              ),
+              // child: Image.network(
+              //   product.image,
+              // ),
             ),
             Container(
               padding: EdgeInsets.all(kDefaultPadding / 2),

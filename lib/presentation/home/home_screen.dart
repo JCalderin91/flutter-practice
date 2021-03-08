@@ -51,7 +51,7 @@ class HomePage extends GetWidget<HomeController> {
               TextWithMoreBtn(title: 'Recomendados', press: () {}),
               Obx(() => controller.productList.isNotEmpty
                   ? Container(
-                      height: 300,
+                      height: 242.0,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,

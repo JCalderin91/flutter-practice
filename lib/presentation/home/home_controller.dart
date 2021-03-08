@@ -1,4 +1,4 @@
-import 'package:api_rest_app/domain/models/user_model.dart';
+import 'package:api_rest_app/domain/models/product_model.dart';
 import 'package:get/get.dart';
 import 'package:api_rest_app/domain/repository/local_storage_repository.dart';
 import 'package:api_rest_app/domain/repository/products_repository.dart';
@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   }
 
   RxList productList = [].obs;
-
+  Rx<ProductModel> productSelected = ProductModel.empty().obs;
 
   void fetchProducts() async {
     var products;
@@ -30,6 +30,10 @@ class HomeController extends GetxController {
     } catch (Exception) {
       // TODO: implementar mensajes de error
     }
+  }
+
+  void selectProduct(ProductModel product) {
+    productSelected(product);
   }
 
   Future<void> logout() async {

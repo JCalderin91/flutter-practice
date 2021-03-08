@@ -25,6 +25,7 @@ class ProductsRepositoryImpl extends ProductsRespositoryInterface {
         return products;
       }
     } catch (Exception) {
+      print(Exception);
       return products;
     }
     return products;

@@ -48,6 +48,16 @@ class ProductModel {
         category: Category.fromJson(json["category"]),
       );
 
+  factory ProductModel.empty() => ProductModel(
+        id: null,
+        categoryId: null,
+        category: null,
+        image: null,
+        name: null,
+        price: null,
+        stock: null,
+      );
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "category_id": categoryId,
